@@ -7,8 +7,6 @@ Abstract: X-ray computed tomography (CT) is widely used for medical diagnosis an
 
 ![schematic](pfcm_process.png)
 
-# Outline
-
 This implementation is build heavily on  [consistency models](https://github.com/openai/consistency_models/) and [PFGM++](https://github.com/Newbeeer/pfgmpp). All models are trained on the [Mayo low-dose CT data](https://www.aapm.org/grandchallenge/lowdosect/). Trained weights for EDM, PFGM++, CM, and PFCM in Table IV are available here:
  * EDM: [edm.pt](https://drive.google.com/file/d/1zrZ5LytOxASjimqB_BfcKsJyhuGXgOyv/view?usp=share_link)
  * PFGM++: [pfgmpp_2048.pt](https://drive.google.com/file/d/1CHpDSH5i9GWjwdWf8hgvEjDHDbm-LeIf/view?usp=share_link)
@@ -23,7 +21,15 @@ cd docker && make build
 ```
 
 # Model sampling
-
+The following commands are used for the results in Table IV: 
+* EDM: 
+```
+python image_sample.py --training_mode edm --generator determ-indiv --batch_size 1 --sigma_max 380 --sigma_min 0.002 \
+--s_churn 0 --steps 40 --sampler heun_h --model_path edm.pt --attention_resolutions 32,16,8  \
+--class_cond False --dropout 0 --image_size 256 --num_channels 256 --num_head_channels 64 --num_res_blocks 2 \
+ --num_samples 1 --resblock_updown True --use_fp16 True --use_scale_shift_norm False --weight_schedule karras
+\ --minmax train_mayo_1_alt_minmax --data val_mayo_1_alt
+```
 
 # Model training
 
