@@ -24,10 +24,8 @@ cd docker && make build
 ```
 
 # Model sampling
-```
-python image_sample.py --training_mode edm --generator determ-indiv --batch_size 1 --sigma_max 380 --sigma_min 0.002 --s_churn 0 --steps 40 --sampler heun_h --model_path ./tmp/edm/model300000.pt --attention_resolutions 32,16,8  --class_cond False --dropout 0 --image_size 256 --num_channels 256 --num_head_channels 64 --num_res_blocks 2 --num_samples 1 --resblock_updown True --use_fp16 True --use_scale_shift_norm False --weight_schedule karras --minmax train_mayo_1_alt_minmax --data val_mayo_1_alt
+Exact commands to reproduce result in Table IV are available in evals.txt. Trained weights are available in the links above. 
 
-```
 # Model training
 
 # Processing the Mayo low-dose CT data 
