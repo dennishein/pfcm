@@ -4,7 +4,7 @@ This repository contains the codebase for [Poisson Flow Consistency Models](http
 
 # Pre-trained models
 
-Here are the download links for each the models in Table IV:
+Here are the download links for each of the models in Table IV:
 
  * EDM: [edm.pt](https://drive.google.com/file/d/1zrZ5LytOxASjimqB_BfcKsJyhuGXgOyv/view?usp=share_link)
  * PFGM++: [pfgmpp_2048.pt](https://drive.google.com/file/d/1CHpDSH5i9GWjwdWf8hgvEjDHDbm-LeIf/view?usp=share_link)
