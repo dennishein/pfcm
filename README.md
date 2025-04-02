@@ -3,38 +3,7 @@
 This repository contains the codebase for [PFCM: Poisson flow consistency models for
 low-dose CT image denoising](https://arxiv.org/abs/2402.08159), to appear in IEEE TMI. 
 
-Abstract: X-ray computed tomography (CT) is widely
-used for medical diagnosis and treatment planning; how-
-ever, concerns about ionizing radiation exposure drive ef-
-forts to optimize image quality at lower doses. This study
-introduces Poisson Flow Consistency Models (PFCM), a
-novel family of deep generative models that combines
-the robustness of PFGM++ with the efficient single-step
-sampling of consistency models. PFCM are derived by
-generalizing consistency distillation to PFGM++ through
-a change-of-variables and an updated noise distribution.
-As a distilled version of PFGM++, PFCM inherit the ability
-to trade off robustness for rigidity via the hyperparameter
-D ∈ (0, ∞). A fact that we exploit to adapt this novel
-generative model for the task of low-dose CT image de-
-noising, via a “task-specific” sampler that “hijacks” the
-generative process by replacing an intermediate state with
-the low-dose CT image. While this “hijacking” introduces a
-severe mismatch—the noise characteristics of low-dose CT
-images are different from that of intermediate states in the
-Poisson flow process—we show that the inherent robust-
-ness of PFCM at small D effectively mitigates this issue.
-The resulting sampler achieves excellent performance in
-terms of LPIPS, SSIM, and PSNR on the Mayo low-dose
-CT dataset. By contrast, an analogous sampler based on
-standard consistency models is found to be significantly
-less robust under the same conditions, highlighting the
-importance of a tunable D afforded by our novel framework.
-To highlight generalizability, we show effective denoising of
-clinical images from a prototype photon-counting system
-reconstructed using a sharper kernel and at a range of
-energy levels.
-
+Abstract: X-ray computed tomography (CT) is widely used for medical diagnosis and treatment planning; however, concerns about ionizing radiation exposure drive efforts to optimize image quality at lower doses. This study introduces Poisson Flow Consistency Models (PFCM), a novel family of deep generative models that combines the robustness of PFGM++ with the efficient single-step sampling of consistency models. PFCM are derived by generalizing consistency distillation to PFGM++ through a change-of-variables and an updated noise distribution. As a distilled version of PFGM++, PFCM inherit the ability to trade off robustness for rigidity via the hyperparameter D ∈ (0, ∞). A fact that we exploit to adapt this novel generative model for the task of low-dose CT image denoising, via a “task-specific” sampler that “hijacks” the generative process by replacing an intermediate state with the low-dose CT image. While this “hijacking” introduces a severe mismatch—the noise characteristics of low-dose CT images are different from that of intermediate states in the Poisson flow process—we show that the inherent robustness of PFCM at small D effectively mitigates this issue. The resulting sampler achieves excellent performance in terms of LPIPS, SSIM, and PSNR on the Mayo low-dose CT dataset. By contrast, an analogous sampler based on standard consistency models is found to be significantly less robust under the same conditions, highlighting the importance of a tunable D afforded by our novel framework. To highlight generalizability, we show effective denoising of clinical images from a prototype photon-counting system reconstructed using a sharper kernel and at a range of energy levels.
 
 This repo heavily builds on [consistency models](https://github.com/openai/consistency_models/blob/main/.gitignore) and [PFGM++](https://github.com/Newbeeer/pfgmpp). 
 
@@ -54,13 +23,11 @@ To install with Docker, run the following commands:
 cd docker && make build 
 ```
 
-# Model training and sampling
+# Model sampling
 
-We provide examples of EDM training, consistency distillation, consistency training, single-step generation, and multistep generation in [scripts/launch.sh](scripts/launch.sh).
+# Model training
 
-# Evaluations
-
-To compare different generative models, we use FID, Precision, Recall, and Inception Score. These metrics can all be calculated using batches of samples stored in `.npz` (numpy) files. One can evaluate samples with [cm/evaluations/evaluator.py](evaluations/evaluator.py) in the same way as described in [openai/guided-diffusion](https://github.com/openai/guided-diffusion), with reference dataset batches provided therein.
+# Processing the Mayo low-dose CT data 
 
 # Citation
 
