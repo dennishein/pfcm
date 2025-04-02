@@ -22,14 +22,40 @@ cd docker && make build
 
 # Model sampling
 The following commands are used for the results in Table IV: 
-EDM: 
 ```
+# EDM
 python image_sample.py --training_mode edm --generator determ-indiv --batch_size 1 \
 --sigma_max 380 --sigma_min 0.002 --s_churn 0 --steps 40 --sampler heun_h \
 --model_path edm.pt --attention_resolutions 32,16,8 --class_cond False --dropout 0 \
 --image_size 256 --num_channels 256 --num_head_channels 64 --num_res_blocks 2 \
- --num_samples 1 --resblock_updown True --use_fp16 True --use_scale_shift_norm False \
+--num_samples 1 --resblock_updown True --use_fp16 True --use_scale_shift_norm False \
 --weight_schedule karras --minmax train_mayo_1_alt_minmax --data val_mayo_1_alt
+
+# PFGM++ (D=2048)
+python image_sample.py --training_mode edm --generator determ-indiv --batch_size 1 \
+--sigma_max 380 --sigma_min 0.002 --s_churn 0 --steps 40 --sampler heun_h \
+--model_path pfgmpp_2048.pt --attention_resolutions 32,16,8  \
+--class_cond False --dropout 0 --image_size 256 --num_channels 256 --num_head_channels 64 \
+--num_res_blocks 2 --num_samples 1 --resblock_updown True --use_fp16 True \
+--use_scale_shift_norm False --weight_schedule karras --minmax train_mayo_1_alt_minmax \
+--aug_dim 2048 --data val_mayo_1_alt
+
+# CD
+python image_sample.py --batch_size 1 --generator determ-indiv --training_mode consistency_distillation \
+--sampler onestep_h --model_path ./tmp/cd/model300000.pt --attention_resolutions 32,16,8 \
+--class_cond False --use_scale_shift_norm False --dropout 0.0 --image_size 256 --num_channels 256 \
+--num_head_channels 64 --num_res_blocks 2 --num_samples 1 --resblock_updown True \
+--use_fp16 True --weight_schedule uniform --minmax train_mayo_1_alt_minmax \
+--sigma_max 380 --data val_mayo_1_alt
+
+# PFCD (D=128, with task-specific)
+python image_sample_hijack.py --batch_size 1 --generator determ-indiv --training_mode consistency_distillation \
+--sampler onestep_hijack --model_path ./tmp/pfcd_128/model300000.pt --attention_resolutions 32,16,8 \
+--class_cond False --use_scale_shift_norm False --dropout 0.0 --image_size 256 --num_channels 256 \
+--num_head_channels 64 --num_res_blocks 2 --num_samples 1 --resblock_updown True --use_fp16 True \
+--weight_schedule uniform --minmax train_mayo_1_alt_minmax --aug_dim 128 --sigma_max 380 \
+--hijack 30 --weight 0.7 --data val_mayo_1_alt
+
 ```
 
 # Model training
