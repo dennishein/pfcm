@@ -62,20 +62,25 @@ python image_sample_hijack.py --batch_size 1 --generator determ-indiv --training
 PFCM are obtained in two steps. First, train a PFGM++ and then distill it into PFCM via consistency distillation. To train using four GPUS run: 
 ```
 # PFGM++
-mpiexec -n 4 python edm_train.py --attention_resolutions 32,16,8 --class_cond False --dropout 0.1 --ema_rate 0.999,0.9999,0.9999432189950708 \
---global_batch_size 4 --image_size 256 --lr 0.0001 --num_channels 256 --num_head_channels 64 --num_res_blocks 2 --resblock_updown True \
---schedule_sampler lognormal --use_fp16 True --use_scale_shift_norm False --weight_decay 0.0 --weight_schedule karras \
---data_dir ./datasets/train_mayo_1_alt/HD/ --aug_dim=2048 --sigma_max 380
+mpiexec -n 4 python edm_train.py --attention_resolutions 32,16,8 --class_cond False --dropout 0.1 \
+      --ema_rate 0.999,0.9999,0.9999432189950708 --global_batch_size 4 --image_size 256 --lr 0.0001 \
+      --num_channels 256 --num_head_channels 64 --num_res_blocks 2 --resblock_updown True \
+      --schedule_sampler lognormal --use_fp16 True --use_scale_shift_norm False \
+      --weight_decay 0.0 --weight_schedule karras --data_dir ./datasets/train_mayo_1_alt/HD/ \
+      --aug_dim=128 --sigma_max 380
 
 # PFCM 
-mpiexec -n 4 python cm_train.py --training_mode consistency_distillation --sigma_max 380 --sigma_min 0.002 --target_ema_mode fixed \
---start_ema 0.95 --scale_mode fixed --start_scales 40 --total_training_steps 600000 --loss_norm lpips --lr_anneal_steps 0 \
---teacher_model_path pfgmpp.pt --attention_resolutions 32,16,8 --class_cond False --use_scale_shift_norm False --dropout 0.0 \
---teacher_dropout 0.1 --ema_rate 0.9999,0.99994,0.9999432189950708 --global_batch_size 4 --image_size 256 --lr 0.00001 \
---num_channels 256 --num_head_channels 64 --num_res_blocks 2 --resblock_updown True --schedule_sampler uniform --use_fp16 True \
---weight_decay 0.0 --weight_schedule uniform --data_dir ./datasets/train_mayo_1_alt/HD/ --aug_dim 2048
+mpiexec -n 4 python cm_train.py --training_mode consistency_distillation --sigma_max 380 --sigma_min 0.002 \
+      --target_ema_mode fixed --start_ema 0.95 --scale_mode fixed --start_scales 40 \
+      --total_training_steps 600000 --loss_norm lpips --lr_anneal_steps 0 
+      --teacher_model_path pfgmpp_128.pt --attention_resolutions 32,16,8 --class_cond False \
+      --use_scale_shift_norm False --dropout 0.0 --teacher_dropout 0.1 \
+      --ema_rate 0.9999,0.99994,0.9999432189950708 --global_batch_size 4 --image_size 256 --lr 0.00001 \
+      --num_channels 256 --num_head_channels 64 --num_res_blocks 2 --resblock_updown True --schedule_sampler uniform \
+       --use_fp16 True --weight_decay 0.0 --weight_schedule uniform --data_dir ./datasets/train_mayo_1_alt/HD/ \
+      --aug_dim 128
 ```
-
+You can obtain EDM/CM by simply omitting `--aug_dim`. 
 
 # Citation
 
