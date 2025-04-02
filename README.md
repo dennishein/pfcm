@@ -84,7 +84,7 @@ You can obtain EDM/CM by simply omitting `--aug_dim`.
 
 # Citation
 
-If you find this method and/or code useful, please consider citing
+If you find this useful, please consider citing
 
 ```bibtex
 @misc{hein2025pfcm,
